@@ -1,0 +1,8 @@
+<resources xmlns:tools="http://schemas.android.com/tools">
+    <style name="Theme.WestboyCamera" parent="android:Theme.Material.NoActionBar">
+        <item name="android:statusBarColor">@color/westboy_background</item>
+        <item name="android:navigationBarColor">@color/westboy_background</item>
+        <item name="android:windowBackground">@color/westboy_background</item>
+        <item name="android:forceDarkAllowed" tools:targetApi="q">false</item>
+    </style>
+</resources>
