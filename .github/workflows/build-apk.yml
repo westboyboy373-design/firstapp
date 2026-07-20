@@ -2,8 +2,11 @@ name: Build Android APK
 
 on:
   push:
-    branches: [ "main" ]
+    branches: [ "main", "master", "MACARTHY" ]
   workflow_dispatch:
+
+permissions:
+  contents: read
 
 jobs:
   build:
@@ -19,13 +22,11 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      # Installs Gradle 8.7 directly onto the runner environment
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
         with:
           gradle-version: '8.7'
 
-      # Executes the build using system Gradle directly inside android/
       - name: Build Debug APK
         working-directory: android
         run: gradle assembleDebug --stacktrace
