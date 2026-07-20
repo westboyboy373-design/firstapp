@@ -18,26 +18,28 @@ jobs:
         with:
           distribution: 'temurin'
           java-version: '17'
-          cache: 'gradle'
 
+      # Sets up Gradle tooling on the runner
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      # Download the wrapper JAR file if it's missing in git
-      - name: Download Gradle Wrapper JAR
-        run: |
-          mkdir -p android/gradle/wrapper
-          curl -s -S -L -o android/gradle/wrapper/gradle-wrapper.jar https://raw.githubusercontent.com/gradle/gradle/v8.7.0/gradle/wrapper/gradle-wrapper.jar
+      # Generates gradlew + wrapper files directly inside android/
+      - name: Generate Gradle Wrapper
+        working-directory: android
+        run: gradle wrapper --gradle-version 8.7
 
-      - name: Grant execute permission to gradlew
-        run: chmod +x android/gradlew
+      - name: Make gradlew executable
+        working-directory: android
+        run: chmod +x gradlew
 
-      - name: Build debug APK
+      # Builds the debug APK
+      - name: Build Debug APK
         working-directory: android
         run: ./gradlew assembleDebug --stacktrace
 
-      - name: Upload APK artifact
+      # Uploads app-debug.apk
+      - name: Upload APK Artifact
         uses: actions/upload-artifact@v4
         with:
           name: westboy-camera-debug-apk
-          path: android/app/build/outputs/apk/debug/*.apk
+          path: android/app/build/outputs/apk/debug/app-debug.apk
