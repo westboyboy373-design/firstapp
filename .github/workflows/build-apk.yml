@@ -3,7 +3,7 @@ name: Build Android APK
 on:
   push:
     branches: [ "main" ]
-  workflow_dispatch: {}
+  workflow_dispatch:
 
 jobs:
   build:
@@ -19,23 +19,18 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      - name: Set up Android SDK
-        uses: android-actions/setup-android@v3
-
-      - name: Set up Gradle
+      # Automatically sets up Gradle, handles caching, and makes gradlew executable
+      - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
+        with:
+          build-root-directory: android
 
-      - name: Generate Gradle wrapper
-        working-directory: android
-        run: gradle wrapper --gradle-version 8.7
-
-      - name: Grant execute permission to gradlew
-        working-directory: android
-        run: chmod +x ./gradlew
+      - name: Make gradlew executable
+        run: chmod +x android/gradlew
 
       - name: Build debug APK
-        working-directory: android
         run: ./gradlew assembleDebug --stacktrace
+        working-directory: android
 
       - name: Upload APK artifact
         uses: actions/upload-artifact@v4
