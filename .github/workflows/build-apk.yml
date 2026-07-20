@@ -19,27 +19,18 @@ jobs:
           distribution: 'temurin'
           java-version: '17'
 
-      # Sets up Gradle tooling on the runner
       - name: Setup Gradle
         uses: gradle/actions/setup-gradle@v4
 
-      # Generates gradlew + wrapper files directly inside android/
-      - name: Generate Gradle Wrapper
-        working-directory: android
-        run: gradle wrapper --gradle-version 8.7
-
       - name: Make gradlew executable
-        working-directory: android
-        run: chmod +x gradlew
+        run: chmod +x android/gradlew
 
-      # Builds the debug APK
       - name: Build Debug APK
         working-directory: android
         run: ./gradlew assembleDebug --stacktrace
 
-      # Uploads app-debug.apk
-      - name: Upload APK Artifact
+      - name: Upload APK artifact
         uses: actions/upload-artifact@v4
         with:
           name: westboy-camera-debug-apk
-          path: android/app/build/outputs/apk/debug/app-debug.apk
+          path: android/app/build/outputs/apk/debug/*.apk
