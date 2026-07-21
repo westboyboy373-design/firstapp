@@ -5,6 +5,9 @@
          declared — this app never opens the microphone, so the final
          exported file can never contain room noise. -->
     <uses-permission android:name="android.permission.CAMERA" />
+    <uses-permission
+        android:name="android.permission.WRITE_EXTERNAL_STORAGE"
+        android:maxSdkVersion="28" />
     <uses-feature android:name="android.hardware.camera.any" />
     <uses-feature android:name="android.hardware.camera.flash" android:required="false" />
 
