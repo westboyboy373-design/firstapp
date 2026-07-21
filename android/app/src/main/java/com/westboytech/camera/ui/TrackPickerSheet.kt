@@ -4,7 +4,9 @@ import android.net.Uri
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.clickable
 import androidx.compose.material.icons.Icons
+import androidx.compose.material.icons.filled.Check
 import androidx.compose.material.icons.filled.MusicNote
 import androidx.compose.material3.*
 import androidx.compose.runtime.Composable
@@ -43,7 +45,7 @@ fun TrackPickerSheet(audioManager: AudioManager, onDismiss: () -> Unit) {
                     headlineContent = { Text(track.title, color = Color.White) },
                     leadingContent = { Icon(Icons.Filled.MusicNote, null, tint = Color.White) },
                     trailingContent = {
-                        if (selected == track) Icon(androidx.compose.material.icons.Icons.Filled.Check, null, tint = WestboyColors.NeonCyan)
+                        if (selected == track) Icon(Icons.Filled.Check, null, tint = WestboyColors.NeonCyan)
                     },
                     colors = ListItemDefaults.colors(containerColor = WestboyColors.Background),
                     modifier = Modifier.clickableTrack { audioManager.loadTrack(track); onDismiss() }
@@ -54,4 +56,4 @@ fun TrackPickerSheet(audioManager: AudioManager, onDismiss: () -> Unit) {
 }
 
 private fun Modifier.clickableTrack(onClick: () -> Unit): Modifier =
-    this.then(androidx.compose.foundation.clickable(onClick = onClick))
+    this.clickable(onClick = onClick)
